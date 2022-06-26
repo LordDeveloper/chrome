@@ -169,11 +169,21 @@ class Node
             ->move($position->getCenterX(), $position->getCenterY())
             ->click();
     }
+    
+    public function reset(): void
+    {
+        $this->sendKeys(null);
+    }
 
-    public function sendKeys(string $text): void
+    public function sendKeys(string $text, bool $reset = true): void
     {
         $this->scrollIntoView();
         $this->focus();
+        
+        if ($reset === true)
+            $this->page->keyboard()
+                ->typeText(null);
+        
         $this->page->keyboard()
             ->typeText($text);
     }
